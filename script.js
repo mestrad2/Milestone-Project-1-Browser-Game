@@ -11,9 +11,6 @@ loadSprite('character-left', "assets/character-left.png")
 const player = add([
     sprite('character-left'),
     pos(100,100),
-    {
-        dir: vec2(1,0)
-    }
 ])
 // Text code to ensure the library has been implemented.
 add([
