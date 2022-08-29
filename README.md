@@ -15,7 +15,7 @@ I will include more specific details as to what the user will be able to do and 
 -User will be able to attack with a sword and defend with a shield using key presses or left/right click (TBD)
 -User will be able to collect items to unlock the next path in the starting room and ultimately making it to the final room.
 
-As for the current development flow I am planning on, I am starting with the basic functionality of the start screen. The user will be able to click on the Start button
+As for the current development flow I am planning on, I am starting with the basic HTML functionality of the start screen. The user will be able to click on the Start button
 to open a new page where the game will be handled. 
 
 The next section I will be tackling is the Javascript portion. Since the level designs will be created to KaboomJS, I believe this would be the next most logical approach.
