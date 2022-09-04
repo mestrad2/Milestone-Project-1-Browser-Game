@@ -28,6 +28,8 @@ loadSprite('bottom-left-wall', "assets/bottom-left-wall.png")
 loadSprite('top-closed-door', "assets/top-closed-door.png")
 loadSprite('bottom-closed-door', "assets/bottom-closed-door.png")
 
+loadSprite('block', "assets/block.png")
+
 
 
 //test code to add sprite on the page
@@ -41,8 +43,11 @@ add([
     pos(300, 300),
 ]);
 
+
+//Scene() defines a scene used to create an area where the game will be handled
 scene("game", () => {
-    const mapLayout = [
+    //define the layout of the floor using symbols defined 
+    const mapLayout1 = [
         '1tttttttttt2',
         'l          r',
         'l          r',
@@ -55,6 +60,85 @@ scene("game", () => {
         '3bbbbbbbbbb4',
     ]
 
+    const mapLayout2 = [
+        '1ttttttttttt2',
+        'l         x r',
+        'l     x   x r',
+        'lxx   x   x r',
+        'l x   x   x r',
+        'l x   x   x r',
+        'l x   x   x r',
+        'l x   x   x r',
+        'l     x     r',
+        '3bbbbbbbbbbb4',
+    ]
+
+    const mapLayout3 = [
+        '1tttttttttt2',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        '3bbbbbbbbbb4',
+    ]
+
+    const mapLayout4 = [
+        '1tttttttttt2',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        '3bbbbbbbbbb4',
+    ]
+
+    const mapLayout5 = [
+        '1tttttttttt2',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        '3bbbbbbbbbb4',
+    ]
+
+    const mapLayout6 = [
+        '1tttttttttt2',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        '3bbbbbbbbbb4',
+    ]
+
+    const mapLayout7 = [
+        '1tttttttttt2',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        '3bbbbbbbbbb4',
+    ]
+
+    //defines the symbols to be used for the map layout, each symbol is assigned a sprite that was loaded above using loadSprite(), also defines width and height of the map
     const levelSettings = {
         width: 32,
         height: 32,
@@ -65,10 +149,12 @@ scene("game", () => {
         '1': () => [sprite('top-left-wall')],
         '2': () => [sprite('top-right-wall')],
         '3': () => [sprite('bottom-left-wall')],
-        '4': () => [sprite('bottom-right-wall')]
+        '4': () => [sprite('bottom-right-wall')],
+        'x': () => [sprite('block')]
     }
 
-    addLevel(mapLayout, levelSettings)
+    //addLevel(mapLayout1, levelSettings)
+    addLevel(mapLayout2, levelSettings)
 })
 
 go("game")
