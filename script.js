@@ -30,7 +30,9 @@ loadSprite('bottom-closed-door', "assets/bottom-closed-door.png")
 
 loadSprite('block', "assets/block.png")
 
-
+loadSprite('enemy-1', "assets/enemy-1.png")
+loadSprite('enemy-2', "assets/enemy-2.png")
+loadSprite('final-boss', "assets/final-boss.png")
 
 //test code to add sprite on the page
 const player = add([
@@ -66,7 +68,7 @@ scene("game", () => {
         'l     x   x r',
         'lxx   x   x r',
         'l x   x   x r',
-        'l x   x   x r',
+        'l x e x f x r',
         'l x   x   x r',
         'l x   x   x r',
         'l     x     r',
@@ -75,13 +77,13 @@ scene("game", () => {
 
     const mapLayout3 = [
         '1tttttttttt2',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
+        'l xx   xxx r',
+        'l x  x   x r',
+        'lx   x    xr',
+        'l    x     r',
+        'lx   x    xr',
+        'l xxx    x r',
+        'l xxx xxx  r',
         'l          r',
         '3bbbbbbbbbb4',
     ]
@@ -114,13 +116,13 @@ scene("game", () => {
 
     const mapLayout6 = [
         '1tttttttttt2',
+        'lxxxx  xxxxr',
         'l          r',
+        'lxxxxxxxxx r',
         'l          r',
+        'l xxxxxxxxxr',
         'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
+        'lxxxx  xxxxr',
         'l          r',
         '3bbbbbbbbbb4',
     ]
@@ -129,7 +131,7 @@ scene("game", () => {
         '1tttttttttt2',
         'l          r',
         'l          r',
-        'l          r',
+        'l    g     r',
         'l          r',
         'l          r',
         'l          r',
@@ -150,11 +152,16 @@ scene("game", () => {
         '2': () => [sprite('top-right-wall')],
         '3': () => [sprite('bottom-left-wall')],
         '4': () => [sprite('bottom-right-wall')],
-        'x': () => [sprite('block')]
+
+        'x': () => [sprite('block')],
+        'e': () => [sprite('enemy-1')],
+        'f': () => [sprite('enemy-2')],
+        'g': () => [sprite('final-boss')]
     }
 
     //addLevel(mapLayout1, levelSettings)
-    addLevel(mapLayout2, levelSettings)
+    //addLevel(mapLayout2, levelSettings)
+    addLevel(mapLayout7, levelSettings)
 })
 
 go("game")
