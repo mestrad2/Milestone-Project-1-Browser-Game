@@ -12,10 +12,6 @@ loadSprite('character-right', "assets/character-right.png")
 loadSprite('character-up', "assets/character-up.png")
 loadSprite('character-down', "assets/character-down.png")
 
-loadSprite('attack-left', "assets/attack-left.png")
-loadSprite('attack-right', "assets/attack-right.png")
-loadSprite('attack-up', "assets/attack-up.png")
-loadSprite('attack-down', "assets/attack-down.png")
 
 loadSprite('top-wall', "assets/top-wall.png")
 loadSprite('bottom-wall', "assets/bottom-wall.png")
@@ -27,36 +23,30 @@ loadSprite('top-left-wall', "assets/top-left-wall.png")
 loadSprite('bottom-right-wall', "assets/bottom-right-wall.png")
 loadSprite('bottom-left-wall', "assets/bottom-left-wall.png")
 
-loadSprite('top-closed-door', "assets/top-closed-door.png")
-loadSprite('top-opened-door', "assets/top-opened-door.png")
-loadSprite('bottom-closed-door', "assets/bottom-closed-door.png")
-loadSprite('bottom-opened-door', "assets/bottom-opened-door.png")
-loadSprite('right-closed-door', "assets/right-closed-door.png")
-loadSprite('right-opened-door', "assets/right-opened-door.png")
-loadSprite('left-closed-door', "assets/left-closed-door.png")
-loadSprite('left-opened-door', "assets/left-opened-door.png")
+loadSprite('top-stairs', "assets/top-stairs.png")
+loadSprite('bottom-stairs', "assets/bottom-stairs.png")
+loadSprite('left-stairs', "assets/left-stairs.png")
+loadSprite('right-stairs', "assets/right-stairs.png")
 
 loadSprite('block', "assets/block.png")
 
 loadSprite('enemy-1', "assets/enemy-1.png")
 loadSprite('enemy-2', "assets/enemy-2.png")
-loadSprite('boss-1', "assets/boss-1.png")
-loadSprite('boss-2', "assets/boss-2.png")
-loadSprite('final-boss', "assets/final-boss.png")
+
 
 
 //Scene() defines a scene used to create an area where the game will be handled
 scene("game", ({level}) => {
-    
+
     //define the layout of the floor using symbols defined 
     const mapLayout = [
     [
-        '1ttttt5tttt2',
+        '1tttttttttt2',
+        'l     5    r',
         'l          r',
         'l          r',
         'l          r',
         'l          r',
-        '0          @',
         'l          r',
         'l          r',
         'l          r',
@@ -64,35 +54,35 @@ scene("game", ({level}) => {
     ],
     [
         '1ttttttttttt2',
-        'l         x r',
-        'l     x   x r',
-        'lxx   x   x r',
-        '9 x   x   x r',
-        'l x e x f x @',
-        'l x   x   x r',
-        'l x   x   x r',
-        'l     x     r',
+        'l     5     r',
+        'l           r',
+        'l   xxxxx   r',
+        'l   x   x   r',
+        'l e x   x e r',
+        'l   x   x   r',
+        'l           r',
+        'l           r',
         '3bbbbbbbbbbb4',
     ],
     [
         '1tttttttttt2',
-        'l xx    xx r',
-        'l x      x r',
-        'lx        xr',
-        'l    g     @',
+        'l    x5    r',
+        'l    x     r',
+        'l e   xx   r',
+        'l      x f r',
+        'l  x   x   r',
+        'l   xxxxx  r',
+        'l e        r',
         'l          r',
-        'lx        xr',
-        'l x      x r',
-        'l xx    xx r',
         '3bbbbbbbbbb4',
     ],
     [
         '1tttttttttt2',
         'l          r',
         'l      f   r',
-        'l x      xxr',
-        '0 x   x x  !',
-        'lx  e x x xr',
+        'l  x     xxr',
+        'l7 x    x  r',
+        'lxxx  x x xr',
         'l     x x  r',
         'l e   x  f r',
         'l      x   r',
@@ -100,39 +90,39 @@ scene("game", ({level}) => {
     ],
     [
         '1tttttttttt2',
-        'l xx    xx r',
-        'l x      x r',
-        'lx        xr',
-        '0    h     r',
         'l          r',
-        'lx        xr',
-        'l x      x r',
-        'l xx    xx r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
         '3bbbbbbbbbb4',
     ],
     [
-        '1tttt8ttttt2',
-        'lxxxx  xxxxr',
+        '1tttttttttt2',
         'l          r',
-        'lxxxxxxxxx r',
         'l          r',
-        'l xxxxxxxxxr',
         'l          r',
-        'lxxxx  xxxxr',
         'l          r',
-        '3bbbb8bbbbb4',
+        'l          r',
+        'l          r',
+        'l          r',
+        'l          r',
+        '3bbbbbbbbbb4',
     ],
     [
-        '1tttttttttt2',
-        'l xx    xx r',
-        'l x      x r',
-        'lx   i    xr',
-        'l          r',
-        'l          r',
-        'lx        xr',
-        'l x      x r',
-        'l xx    xx r',
-        '3bbbb8bbbbb4',
+        '1tttttttttttt2',
+        'lx x xxx x x r',
+        'l x  x x x x r',
+        'l x  xxx xxx r',
+        'l            r',
+        'l            r',
+        'lx x x x xx xr',
+        'lx x x x x xxr',
+        'lxxxxx x x  xr',
+        '3bbbbbbbbbbbb4',
     ]]
 
     //defines the symbols to be used for the map layout, each symbol is assigned a sprite that was loaded above using loadSprite(), also defines width and height of the map
@@ -143,28 +133,21 @@ scene("game", ({level}) => {
         height: 32,
         'l': () => [sprite('left-wall'), area(), solid()],
         'b': () => [sprite('bottom-wall'), area(), solid()],
-        'r': () => [sprite('right-wall'), area(), solid()],
+        'r': () => [sprite('right-wall'),  area(), solid()],
         't': () => [sprite('top-wall'), area(), solid()],
         '1': () => [sprite('top-left-wall'), area(), solid()],
         '2': () => [sprite('top-right-wall'), area(), solid()],
         '3': () => [sprite('bottom-left-wall'), area(), solid()],
         '4': () => [sprite('bottom-right-wall'), area(), solid()],
 
-        '5': () => [sprite('top-closed-door'), area(), solid()],
-        '6': () => [sprite('top-opened-door'), area()],
-        '7': () => [sprite('bottom-closed-door'), area(), solid()],
-        '8': () => [sprite('bottom-opened-door'), area()],
-        '9': () => [sprite('left-closed-door'), area(), solid()],
-        '0': () => [sprite('left-opened-door'), area()],
-        '!': () => [sprite('right-closed-door'), area(), solid()],
-        '@': () => [sprite('right-opened-door'), area()],
+        '5': () => [sprite('top-stairs'), 'next-floor', area()],
+        '6': () => [sprite('bottom-stairs'), 'next-floor', area()],
+        '7': () => [sprite('left-stairs'), 'next-floor', area()],
+        '8': () => [sprite('right-stairs'), 'next-floor', area()],
 
         'x': () => [sprite('block'), area(), solid()],
-        'e': () => [sprite('enemy-1'), area()],
-        'f': () => [sprite('enemy-2'), area()],
-        'g': () => [sprite('boss-1'), area()],
-        'h': () => [sprite('boss-2'), area()],
-        'i': () => [sprite('final-boss'), area()],
+        'e': () => [sprite('enemy-1'), 'enemy', area()],
+        'f': () => [sprite('enemy-2'), 'enemy', area()],
     }
 
     addLevel(mapLayout[level], levelSettings)
@@ -174,6 +157,7 @@ scene("game", ({level}) => {
         sprite('character-down'),
         pos(175,125),
         area(),
+        solid(),
         {
             //this will make it so that the direction of the character is down by default
             dir: vec2(0,-1)
@@ -211,6 +195,16 @@ scene("game", ({level}) => {
         player.use(sprite('character-down'))
         player.move(0, charSpeed)
         player.dir = vec2(0,-1)
+    })
+
+    player.onCollide('next-floor', () => {
+        go("game", {
+            level: (level + 1)
+        })
+    })
+
+    player.onCollide('enemy', () => {
+
     })
 })
 
