@@ -5,6 +5,8 @@ import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
 kaboom();
 
 const charSpeed = 120
+const enemySpeedOne = 60
+const enemySpeedTwo = 45
 
 // Loads sprite to be used in the game
 loadSprite('character-left', "assets/character-left.png")
@@ -33,134 +35,142 @@ loadSprite('block', "assets/block.png")
 loadSprite('enemy-1', "assets/enemy-1.png")
 loadSprite('enemy-2', "assets/enemy-2.png")
 
+//define the layout of the floor using symbols defined 
+const mapLayout = [
+    [
+        '1tttttttttt2',
+        'lxxxx 5 xxxr',
+        'lx        xr',
+        'lx        xr',
+        'lx        xr',
+        'lx        xr',
+        'lx        xr',
+        'lx        xr',
+        'lxxxxxxxxxxr',
+        '3bbbbbbbbbb4',
+    ],
+    [
+        '1ttttttttttttttt2',
+        'lxxxxxx 5 xxxxxxr',
+        'lx             xr',
+        'lx             xr',
+        'lx    xxx      xr',
+        'lx   x   x     xr',
+        'lx f x   x  e  xr',
+        'lx   x   x     xr',
+        'lx             xr',
+        'lx             xr',
+        'lx             xr',
+        'lxxxxxxxxxxxxxxxr',
+        '3bbbbbbbbbbbbbbb4',
+    ],
+    [
+        '1ttttttttttttt2',
+        'lxxxxxx5  xxxxr',
+        'lx    x      xr',
+        'lx     x     xr',
+        'lx e    xx   xr',
+        'lx       x   xr',
+        'lx  x    x f xr',
+        'lx  x    x   xr',
+        'lx   xxxxx   xr',
+        'lx           xr',
+        'lx e         xr',
+        'lx           xr',
+        'lxxxxxxxxxxxxxr',
+        '3bbbbbbbbbbbbb4',
+    ],
+    [
+        '1tttttttttttttttt2',
+        'lxxxxxxxxxxxxxxxxr',
+        'lx              xr',
+        'lx  e           xr',
+        'lx     xxxxx    xr',
+        'lx    x      f  xr',
+        'lx    x         xr',
+        'lx    x         xr',
+        'lx    xxxxxxxxxxxr',
+        'lx              xr',
+        'lx        e     xr',
+        'lx              xr',
+        'lxxxxxxxx  xxxxxxr',
+        'lx      x       xr',
+        'lx      x   e   xr',
+        'lx      x       xr',
+        'lx              xr',
+        'l               xr',
+        'l7   xxxxxxxxxxxxr',
+        '3bbbbbbbbbbbbbbbb4',
+    ],
+    [
+        '1tttttttttttttt2',
+        'l x x xxx x x  r',
+        'l xxx x x x x  r',
+        'l  x  x x x x  r',
+        'l  x  xxx xxx  r',
+        'l              r',
+        'l              r',
+        'l x x x x xx x r',
+        'l x x x x x xx r',
+        'l xxxxx x x  x r',
+        '3bbbbbbbbbbbbbb4',
+    ],
+    [
+        '1ttttttttttttttttt2',
+        'l   x x xxx x x   r',
+        'l   xxx x x x x   r',
+        'l    x  x x x x   r',
+        'l    x  xxx xxx   r',
+        'l                 r',
+        'l                 r',
+        'l x   xxx xxx xxx r',
+        'l x   x x x   x   r',
+        'l x   x x  x  xxx r',
+        'l x   x x   x x   r',
+        'l xxx xxx xxx xxx r',
+        '3bbbbbbbbbbbbbbbbb4',
+    ]]
+
+//defines the symbols to be used for the map layout, each symbol is assigned a sprite that was loaded above using loadSprite(), also defines width and height of the map
+//area() creates a collider area and allows for collision detection
+//solid() makes it so that other objects cannot move through the object specified with solid()
+const levelSettings = {
+    width: 32,
+    height: 32,
+    'l': () => [sprite('left-wall'), 'wall', area(), solid()],
+    'b': () => [sprite('bottom-wall'), 'wall', area(), solid()],
+    'r': () => [sprite('right-wall'), 'wall', area(), solid()],
+    't': () => [sprite('top-wall'), 'wall', area(), solid()],
+    '1': () => [sprite('top-left-wall'), 'wall', area(), solid()],
+    '2': () => [sprite('top-right-wall'), 'wall', area(), solid()],
+    '3': () => [sprite('bottom-left-wall'), 'wall', area(), solid()],
+    '4': () => [sprite('bottom-right-wall'), 'wall', area(), solid()],
+
+    '5': () => [sprite('top-stairs'), 'next-floor', area()],
+    '6': () => [sprite('bottom-stairs'), 'next-floor', area()],
+    '7': () => [sprite('left-stairs'), 'next-floor', area()],
+    '8': () => [sprite('right-stairs'), 'next-floor', area()],
+
+    'x': () => [sprite('block'), 'block', area(), solid()],
+    'e': () => [sprite('enemy-1'), 'enemy-1', area(), { dir: 1 }],
+    'f': () => [sprite('enemy-2'), 'enemy-2', area(), { dir: -1 }],
+}
 
 
 //Scene() defines a scene used to create an area where the game will be handled
-scene("game", ({level}) => {
-
-    //define the layout of the floor using symbols defined 
-    const mapLayout = [
-    [
-        '1tttttttttt2',
-        'l     5    r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        '3bbbbbbbbbb4',
-    ],
-    [
-        '1ttttttttttt2',
-        'l     5     r',
-        'l           r',
-        'l   xxxxx   r',
-        'l   x   x   r',
-        'l e x   x e r',
-        'l   x   x   r',
-        'l           r',
-        'l           r',
-        '3bbbbbbbbbbb4',
-    ],
-    [
-        '1tttttttttt2',
-        'l    x5    r',
-        'l    x     r',
-        'l e   xx   r',
-        'l      x f r',
-        'l  x   x   r',
-        'l   xxxxx  r',
-        'l e        r',
-        'l          r',
-        '3bbbbbbbbbb4',
-    ],
-    [
-        '1tttttttttt2',
-        'l          r',
-        'l      f   r',
-        'l  x     xxr',
-        'l7 x    x  r',
-        'lxxx  x x xr',
-        'l     x x  r',
-        'l e   x  f r',
-        'l      x   r',
-        '3bbbbbbbbbb4',
-    ],
-    [
-        '1tttttttttt2',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        '3bbbbbbbbbb4',
-    ],
-    [
-        '1tttttttttt2',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        'l          r',
-        '3bbbbbbbbbb4',
-    ],
-    [
-        '1tttttttttttt2',
-        'lx x xxx x x r',
-        'l x  x x x x r',
-        'l x  xxx xxx r',
-        'l            r',
-        'l            r',
-        'lx x x x xx xr',
-        'lx x x x x xxr',
-        'lxxxxx x x  xr',
-        '3bbbbbbbbbbbb4',
-    ]]
-
-    //defines the symbols to be used for the map layout, each symbol is assigned a sprite that was loaded above using loadSprite(), also defines width and height of the map
-    //area() creates a collider area and allows for collision detection
-    //solid() makes it so that other objects cannot move through the object specified with solid()
-    const levelSettings = {
-        width: 32,
-        height: 32,
-        'l': () => [sprite('left-wall'), area(), solid()],
-        'b': () => [sprite('bottom-wall'), area(), solid()],
-        'r': () => [sprite('right-wall'),  area(), solid()],
-        't': () => [sprite('top-wall'), area(), solid()],
-        '1': () => [sprite('top-left-wall'), area(), solid()],
-        '2': () => [sprite('top-right-wall'), area(), solid()],
-        '3': () => [sprite('bottom-left-wall'), area(), solid()],
-        '4': () => [sprite('bottom-right-wall'), area(), solid()],
-
-        '5': () => [sprite('top-stairs'), 'next-floor', area()],
-        '6': () => [sprite('bottom-stairs'), 'next-floor', area()],
-        '7': () => [sprite('left-stairs'), 'next-floor', area()],
-        '8': () => [sprite('right-stairs'), 'next-floor', area()],
-
-        'x': () => [sprite('block'), area(), solid()],
-        'e': () => [sprite('enemy-1'), 'enemy', area()],
-        'f': () => [sprite('enemy-2'), 'enemy', area()],
-    }
+scene("game", ({ level }) => {
 
     addLevel(mapLayout[level], levelSettings)
 
     //test code to add sprite on the page
     const player = add([
         sprite('character-down'),
-        pos(175,125),
+        pos(210, 160),
         area(),
         solid(),
         {
             //this will make it so that the direction of the character is down by default
-            dir: vec2(0,-1)
+            dir: vec2(0, -1)
         }
     ])
 
@@ -170,17 +180,17 @@ scene("game", ({level}) => {
     onKeyDown('left', () => {
         //.use() will change the sprite of the playable character to whichever direction the character is moving
         player.use(sprite('character-left'))
-        
+
         //.move() will move the character at a set speed using x-axis and y-axis movement. (x,0) will move the character left or right depending on the value
         player.move(-charSpeed, 0)
 
         //.dir() will change the direction the character is "facing" at the current moment using x-axis and y-axis coordinates. (x,0) detemines whether the character is facing left or right
-        player.dir = vec2(-1,0)
+        player.dir = vec2(-1, 0)
     })
     onKeyDown('right', () => {
         player.use(sprite('character-right'))
         player.move(charSpeed, 0)
-        player.dir = vec2(1,0)
+        player.dir = vec2(1, 0)
     })
     onKeyDown('up', () => {
         player.use(sprite('character-up'))
@@ -189,13 +199,30 @@ scene("game", ({level}) => {
         player.move(0, -charSpeed)
 
         //.dir() will change the direction the character is "facing" at the current moment using x-axis and y-axis coordinates. (0,y) detemines whether the character is facing up or down
-        player.dir = vec2(0,1)
+        player.dir = vec2(0, 1)
     })
     onKeyDown('down', () => {
         player.use(sprite('character-down'))
         player.move(0, charSpeed)
-        player.dir = vec2(0,-1)
+        player.dir = vec2(0, -1)
     })
+
+    onUpdate('enemy-1', (e) => {
+        e.move(e.dir * enemySpeedOne, 0);
+    })
+
+    onCollide('enemy-1', 'block', (e) => {
+        e.dir = -e.dir
+    })
+
+    onUpdate('enemy-2', (e) => {
+        e.move(0, e.dir * enemySpeedTwo);
+    })
+
+    onCollide('enemy-2', 'block', (e) => {
+        e.dir = -e.dir
+    })
+
 
     player.onCollide('next-floor', () => {
         go("game", {
@@ -203,9 +230,17 @@ scene("game", ({level}) => {
         })
     })
 
-    player.onCollide('enemy', () => {
+    player.onCollide('enemy-1', () => {
+        go("game over")
+    })
 
+    player.onCollide('enemy-2', () => {
+        go("game over")
     })
 })
 
-go("game", {level: 0})
+scene("game over", () => {
+    addLevel(mapLayout[5], levelSettings)
+})
+
+go("game", { level: 0 })
