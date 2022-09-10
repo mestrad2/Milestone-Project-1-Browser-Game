@@ -22,3 +22,4 @@ Finally I will work on CSS to make the start page and the game page more appeali
 For the users, the controls are very simple. Once you click the start button on the start page, the user will be able to use the arrow keys to avoid enemies in several levels.
 
 Link to KaboomJS: https://kaboomjs.com/ 
+Sprites retrieved from The Spriter's Resource: https://www.spriters-resource.com/game_boy_advance/thelegendofzeldaalinktothepast/sheet/20701/
