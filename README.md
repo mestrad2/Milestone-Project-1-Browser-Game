@@ -13,7 +13,7 @@ in Javascript.
 I am starting with the basic HTML functionality of the start screen. The user will be able to click on the Start button
 to open a new page where the game will be handled. 
 
-The next section I will be tackling is the Javascript portion. Since the level designs will be created to KaboomJS, I believe this would be the next most logical approach.
+The next section I tackled is the Javascript portion. Since the level designs will be created to KaboomJS, I believe this would be the next most logical approach.
 There will be a small amount of in-line scripting on the start page but the game scripting itself will be done on a seperate .js file.
 
 Finally I will work on CSS to make the start page and the game page more appealing and try to make it accessible to any screen size.
@@ -21,7 +21,7 @@ Finally I will work on CSS to make the start page and the game page more appeali
 For the users, the controls are very simple. Once you click the start button on the start page, the user will be able to use the arrow keys to avoid enemies in several levels.
 
 There is quite a bit of unfinished functionality from what I initially planned on for this project. I wanted to include a combat system where the player
-could press a button or left/right click to attack enemies and keep track of health but due to time constraints I decided to omit this. This also would have
+could press a button or left/right click to attack enemies and keep track of health and/or score, but due to time constraints I decided to omit this. This also would have
 included a few more map designs and several boss fights from different paths that would unlock a path to the final boss of the dungeon. 
 
 Link to KaboomJS: https://kaboomjs.com/ 

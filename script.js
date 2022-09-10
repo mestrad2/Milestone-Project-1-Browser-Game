@@ -5,7 +5,7 @@ import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
 kaboom({
     width: 600,
     height: 650,
-    background: [130,130,130]
+    background: [130, 130, 130]
 });
 
 //set constants for the speed that the playable character and enemies will be able to move
@@ -18,7 +18,6 @@ loadSprite('character-left', "assets/character-left.png")
 loadSprite('character-right', "assets/character-right.png")
 loadSprite('character-up', "assets/character-up.png")
 loadSprite('character-down', "assets/character-down.png")
-
 
 loadSprite('top-wall', "assets/top-wall.png")
 loadSprite('bottom-wall', "assets/bottom-wall.png")
@@ -36,7 +35,6 @@ loadSprite('left-stairs', "assets/left-stairs.png")
 loadSprite('right-stairs', "assets/right-stairs.png")
 
 loadSprite('block', "assets/block.png")
-
 loadSprite('enemy-1', "assets/enemy-1.png")
 loadSprite('enemy-2', "assets/enemy-2.png")
 
