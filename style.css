@@ -8,12 +8,11 @@ h1 {
 }
 
 main {
-    position: flex;
-    height: 90vh;
-    width: 140vh;
+    height: 2em;
+    width: 2em;
     margin: auto;
-    display: flex;
-    align-items: center;
+    display: sticky;
+    transform: translate(-425px, 10px);
 }
 
 main>div {
@@ -25,6 +24,6 @@ main>div {
 button {
     width: 10em;
     height: 10em;
-    transform: translate(-190px);
+    transform: translate(465px, -500px);
     background-color: green;
 }
