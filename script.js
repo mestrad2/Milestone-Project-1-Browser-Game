@@ -2,7 +2,11 @@
 import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
 
 // This is used to initialize the Kaboom content from the library
-kaboom();
+kaboom({
+    width: 600,
+    height: 650,
+    background:[0,0,255,]
+});
 
 const charSpeed = 120
 const enemySpeedOne = 60
