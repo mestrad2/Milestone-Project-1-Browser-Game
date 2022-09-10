@@ -1,0 +1,31 @@
+h1 {
+    font-family: 'Times New Roman', sans-serif;
+    position: sticky;
+    text-align: center;
+    transform: translate(0, 150px);
+    z-index: 1;
+    color: greenyellow;
+}
+
+main {
+    position: flex;
+    height: 90vh;
+    width: 140vh;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    z-index: 0;
+}
+
+main>div {
+    margin: auto;
+    width: 15%;
+    transform: translate(-100px);
+}
+
+button {
+    width: 10em;
+    height: 10em;
+    transform: translate(-190px);
+    background-color: green;
+}
