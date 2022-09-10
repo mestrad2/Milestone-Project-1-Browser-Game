@@ -14,7 +14,6 @@ main {
     margin: auto;
     display: flex;
     align-items: center;
-    z-index: 0;
 }
 
 main>div {

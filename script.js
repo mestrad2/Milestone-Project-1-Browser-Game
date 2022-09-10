@@ -1,13 +1,14 @@
-// import kaboom lib
+// import kaboom library
 import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
 
-// This is used to initialize the Kaboom content from the library
+// This is used to initialize the Kaboom content from the library, includes options for the width and height of the container and the background color
 kaboom({
     width: 600,
     height: 650,
-    background:[0,0,255,]
+    background: [130,130,130]
 });
 
+//set constants for the speed that the playable character and enemies will be able to move
 const charSpeed = 120
 const enemySpeedOne = 60
 const enemySpeedTwo = 45
@@ -100,7 +101,7 @@ const mapLayout = [
         'lxxxxxxxx  xxxxxxr',
         'lx      x       xr',
         'lx      x   e   xr',
-        'lx      x       xr',
+        'lx    f x       xr',
         'lx              xr',
         'l               xr',
         'l7   xxxxxxxxxxxxr',
@@ -161,12 +162,14 @@ const levelSettings = {
 }
 
 
-//Scene() defines a scene used to create an area where the game will be handled
+//Scene() defines a scene used to create an area where the game will be handled. This accepts a parameter level, which indicates with index of the array mapLayout it will start on.
 scene("game", ({ level }) => {
 
+    //addlevel() uses the map layouts and level settings above to add the current level onto the kaboom container
     addLevel(mapLayout[level], levelSettings)
 
-    //test code to add sprite on the page
+    //Creates a constant variable for the player which will add the playable character into the scene.
+    //area() allows for the player sprite to use collision detection.
     const player = add([
         sprite('character-down'),
         pos(210, 160),
@@ -211,11 +214,15 @@ scene("game", ({ level }) => {
         player.dir = vec2(0, -1)
     })
 
+    //onUpdate() runs an event for any object with a specific tag every frame
     onUpdate('enemy-1', (e) => {
+        //this will move the enemy from left to right based on their speed, which is defined above
         e.move(e.dir * enemySpeedOne, 0);
     })
 
+    //onCollide() checks to see if two objects collide with one another, and performs a specific action
     onCollide('enemy-1', 'block', (e) => {
+        //this will change the direction of the enemy when it collides with a block
         e.dir = -e.dir
     })
 
@@ -228,12 +235,14 @@ scene("game", ({ level }) => {
     })
 
 
+    //player.onCollide() will check to see if the player collides with the stairs on any given map, and when they do they proceed to the next level
     player.onCollide('next-floor', () => {
         go("game", {
             level: (level + 1)
         })
     })
 
+    //player.onCollide() will check to see if the player collides with an enemy on any given map, and when they do they proceed lose screen
     player.onCollide('enemy-1', () => {
         go("game over")
     })
@@ -243,8 +252,10 @@ scene("game", ({ level }) => {
     })
 })
 
+//this scene is only accessed when the player collides with an enemy
 scene("game over", () => {
     addLevel(mapLayout[5], levelSettings)
 })
 
+//go() is what initializes the game on the screen, starting on floor 0 and passing the value 0 onto the main scene
 go("game", { level: 0 })
